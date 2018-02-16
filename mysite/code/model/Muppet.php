@@ -2,6 +2,7 @@
 
 namespace MyOrg\Model;
 
+use SilverStripe\Forms\TextField;
 use SilverStripe\GraphQL\Scaffolding\Interfaces\ScaffoldingProvider;
 use SilverStripe\GraphQL\Scaffolding\Scaffolders\SchemaScaffolder;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -46,6 +47,7 @@ class Muppet extends DataObject implements ScaffoldingProvider
 
     public function getCMSFields()
     {
+        $muppetTitle = TextField::create('Title', 'Muppet Title');
         // create text field for muppet description
         $muppetDetails = TextareaField::create('Description', 'Muppet Description');
         // create upload field for muppet image
@@ -59,6 +61,7 @@ class Muppet extends DataObject implements ScaffoldingProvider
             $root = TabSet::create(
                 'Root',
                 new Tab('Main', 'Muppet Details',
+                    $muppetTitle,
                     $muppetDetails
                 ),
                 new Tab('EventImages', 'Image',
