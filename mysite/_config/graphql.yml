@@ -13,6 +13,10 @@ SilverStripe\GraphQL\Controller:
   schema:
     scaffolding:
       types:
+        MyOrg\Model\HomePage:
+          fields: [ID, Title, Intro, Content]
+          operations:
+            read: true
   # Enforce HTTP basic authentication for GraphQL requests
 #  authenticators:
 #    class: SilverStripe\GraphQL\Auth\BasicAuthAuthenticator

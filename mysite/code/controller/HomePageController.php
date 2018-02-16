@@ -1,7 +1,10 @@
 <?php
+namespace MyOrg\Controller;
+use SilverStripe\View\Requirements;
+use SilverStripe\View\ThemeResourceLoader;
 use SilverStripe\CMS\Controllers\ContentController;
 
-class PageController extends ContentController
+class HomePageController extends ContentController
 {
     /**
      * An array of actions that can be accessed via a request. Each array element should be an action name, and the
@@ -19,13 +22,25 @@ class PageController extends ContentController
      * @var array
      */
     private static $allowed_actions = array(
-
     );
-
     protected function init()
     {
         parent::init();
         // You can include any CSS or JS required by your project here.
         // See: https://docs.silverstripe.org/en/developer_guides/templates/requirements/
+    }
+    public function doInit()
+    {
+        //parent::init();
+        parent::doInit();
+        Requirements::clear();
+        $themeFolder = $this->ThemeDir();
+        Requirements::set_write_js_to_body(true);
+        Requirements::set_force_js_to_bottom(true);
+        Requirements::javascript($themeFolder . '/dist/app.bundle.js');
+    }
+    public function ThemeDir()
+    {
+        return ThemeResourceLoader::inst()->getPath('react-app');
     }
 }
