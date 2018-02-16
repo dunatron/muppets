@@ -4,6 +4,9 @@ import './App.css';
 import WebpackLogo from './img/webpack.svg';
 import SSLogo from './img/silverstripe-logo.png';
 
+// Pages
+import HomePage from './containers/HomePageContainer';
+
 import {withStyles} from 'material-ui/styles';
 
 const styles = theme => ({
@@ -23,7 +26,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo"/>
           <img src={WebpackLogo} className="App-logo" alt="logo"/>
         </header>
-        <h1 className={classes.header}>Home Page</h1>
+        <HomePage />
       </div>
     )
   }
