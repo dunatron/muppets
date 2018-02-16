@@ -1,0 +1,19 @@
+---
+Name: app-graphql
+After:
+  - graphqlconfig
+---
+SilverStripe\GraphQL\Controller:
+  cors:
+    Enabled: true
+    Allow-Origin: '*'
+    Allow-Headers: 'Authorization, Content-Type'
+    Allow-Methods:  'GET, POST, OPTIONS'
+    Max-Age: 86400
+  schema:
+    scaffolding:
+      types:
+  # Enforce HTTP basic authentication for GraphQL requests
+#  authenticators:
+#    class: SilverStripe\GraphQL\Auth\BasicAuthAuthenticator
+#    priority: 10
