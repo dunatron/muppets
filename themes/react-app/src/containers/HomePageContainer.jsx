@@ -25,14 +25,15 @@ const styles = theme => ({
     color: fade(theme.palette.common.white, 0.8),
   },
   introSection: {
-    'padding': '0 30px',
+    'padding': '0 30px 30px 30px',
     'max-width': '720px',
     'display': 'flex',
     'margin-left': 'auto',
     'margin-right': 'auto',
     'text-align': 'left',
     'fontSize': '18px',
-    'margin-bottom': '40px'
+    'margin-bottom': '40px',
+    'border-bottom': '1px solid lightgray'
   },
   bodySection: {
     'display': 'flex',
