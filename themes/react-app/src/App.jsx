@@ -5,8 +5,11 @@ import WebpackLogo from './img/webpack.svg';
 import SSLogo from './img/silverstripe-logo.png';
 
 import {compose} from 'react-apollo';
-import { Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {withRouter} from "react-router";
+
+// NavBar
+import NavBar from './components/NavBar';
 // Pages
 import HomePage from './containers/HomePageContainer';
 import MuppetsListContainer from './containers/MuppetsListContainer';
@@ -17,7 +20,7 @@ import {withStyles} from 'material-ui/styles';
 const styles = theme => ({
   header: {
     color: theme.palette.primary.main
-  }/**/
+  }
 });
 
 class App extends Component {
@@ -31,6 +34,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo"/>
           <img src={WebpackLogo} className="App-logo" alt="logo"/>
         </header>
+        <NavBar />
         <Switch>
           <Route exact path='/' component={HomePage}/>
           <Route exact path='/muppets' component={MuppetsListContainer}/>

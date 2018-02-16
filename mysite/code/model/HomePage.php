@@ -1,17 +1,14 @@
 <?php
 
 namespace MyOrg\Model;
+
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\GraphQL\Scaffolding\Interfaces\ScaffoldingProvider;
 use SilverStripe\GraphQL\Scaffolding\Scaffolders\SchemaScaffolder;
 use GraphQL\Type\Definition\ResolveInfo;
-use SilverStripe\ORM\DataObject;
 use SilverStripe\Assets\Image;
 use SilverStripe\Forms\TextareaField;
 use SilverStripe\AssetAdmin\Forms\UploadField;
-use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\TabSet;
-use SilverStripe\Forms\Tab;
 
 class HomePage extends SiteTree implements ScaffoldingProvider
 {
@@ -25,8 +22,25 @@ class HomePage extends SiteTree implements ScaffoldingProvider
 
     public function getBannerImage()
     {
-        return $this->Image()->exists() ? $this->Image()->Fill(300, 300)->AbsoluteURL : null;
+        return $this->Image()->exists() ? $this->Image()->Fill(800, 300)->AbsoluteURL : null;
     }
+
+    public function getRandomMuppet()
+    {
+        // This is running 4 times on a graphQL call...
+        $muppetID = $this->RandomMuppetID();
+        error_log(var_export($muppetID, true));
+        //return Muppet::get()->byID($muppetID);
+        return Muppet::get()->byID(1);
+    }
+
+    public function RandomMuppetID()
+    {
+        $ran = array(1,2,3,4,5,6,7,8,9,10,11);
+        $randomID = $ran[array_rand($ran, 1)];
+        return $randomID;
+    }
+
 
     public function onAfterWrite()
     {
@@ -50,7 +64,7 @@ class HomePage extends SiteTree implements ScaffoldingProvider
         // Banner Image upload field
         $bannerImage = UploadField::create('Image');
         // set allowed upload extensions for banner image upload field
-        $bannerImage->getValidator()->setAllowedExtensions(array('png','jpg','jpeg'));
+        $bannerImage->getValidator()->setAllowedExtensions(array('png', 'jpg', 'jpeg'));
 
         // Add extra fields into cms
         $fields->addFieldToTab('Root.Main', $intro, 'Content');
@@ -64,7 +78,7 @@ class HomePage extends SiteTree implements ScaffoldingProvider
         // Get a single muppet object by ID
         $scaffolder
             ->query('getHomePageFirst', __CLASS__)
-            ->setResolver(function ($object, array $args, $context, ResolveInfo $info){
+            ->setResolver(function ($object, array $args, $context, ResolveInfo $info) {
                 $homePage = self::get()->first();
                 if (!$homePage) {
                     throw new \InvalidArgumentException(sprintf(
