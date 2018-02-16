@@ -86388,7 +86388,9 @@ var styles = function styles(theme) {
       'flex-basis': 'auto',
       'max-width': '500px',
       'box-sizing': 'border-box',
-      'margin-bottom': '40px'
+      'margin-bottom': '40px',
+      fontSize: 'medium',
+      'text-align': 'left'
     }
   };
 };
@@ -86459,11 +86461,7 @@ var HomePageContainer = function (_Component) {
             { className: classes.muppetCard },
             _react2.default.createElement(_MuppetCard2.default, { muppetData: RandomMuppet })
           ),
-          _react2.default.createElement(
-            _Typography2.default,
-            { component: 'p', className: classes.contentText },
-            Content
-          )
+          _react2.default.createElement(_Typography2.default, { component: 'p', className: classes.contentText, dangerouslySetInnerHTML: { __html: Content } })
         )
       );
     }

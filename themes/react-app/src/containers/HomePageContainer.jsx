@@ -50,7 +50,9 @@ const styles = theme => ({
     'flex-basis': 'auto',
     'max-width': '500px',
     'box-sizing': 'border-box',
-    'margin-bottom': '40px'
+    'margin-bottom': '40px',
+    fontSize: 'medium',
+    'text-align': 'left'
   }
 });
 
@@ -85,7 +87,7 @@ class HomePageContainer extends Component {
           <div className={classes.muppetCard}>
             <MuppetCard muppetData={RandomMuppet}  />
           </div>
-          <Typography component="p" className={classes.contentText}>{Content}</Typography>
+          <Typography component="p" className={classes.contentText} dangerouslySetInnerHTML={{__html: Content}}></Typography>
         </div>
       </div>
     )
