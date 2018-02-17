@@ -33,7 +33,7 @@ class Muppet extends DataObject implements ScaffoldingProvider
 
     public function getChipImage()
     {
-        return $this->Image()->exists() ? $this->Image()->Fill(42, 42)->AbsoluteURL : null;
+        return $this->Image()->exists() ? $this->Image()->Fill(80, 80)->AbsoluteURL : null;
     }
 
     public function canView($member = null)
