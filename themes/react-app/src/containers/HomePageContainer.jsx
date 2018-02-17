@@ -4,6 +4,7 @@ import {withStyles} from 'material-ui/styles';
 import {gql, compose, graphql} from 'react-apollo';
 import {darken, fade, emphasize, lighten} from 'material-ui/styles/colorManipulator';
 import Typography from 'material-ui/Typography';
+import Loader from '../components/Loader';
 import MuppetCard from '../components/MuppetCard';
 
 const styles = theme => ({
@@ -72,7 +73,7 @@ class HomePageContainer extends Component {
     const {classes, data: {loading, getHomePageFirst}} = this.props;
 
     if (loading) {
-      return <div>Loading</div>;
+      return <Loader loadingText={"Loading Home Page"} size={40} fontSize={22}/>;
     }
 
     const HomePageData = getHomePageFirst[0];

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import {CircularProgress} from 'material-ui/Progress';
+import {darken, fade, emphasize, lighten} from 'material-ui/styles/colorManipulator';
 
 const styles = theme => ({
   loadingContainer: {
@@ -13,11 +14,11 @@ const styles = theme => ({
   loadingText: {
     'font-size': '18px',
     'padding': '15px',
-    'color': theme.palette.primary.main
+    'color': fade(theme.palette.common.black, 0.7),
   },
   progress: {
     margin: `0 ${theme.spacing.unit * 2}px`,
-    fill: theme.palette.secondary.main,
+    fill: fade(theme.palette.primary.main, 0.7),
   },
 });
 
