@@ -87779,10 +87779,15 @@ var MuppetsListContainer = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        readMuppets.edges.map(function (edge, index) {
-          return _react2.default.createElement(_MuppetChip2.default, { key: index, onClick: function onClick() {
+        readMuppets.edges && readMuppets.edges.map(function (edge, index) {
+          return _react2.default.createElement(_MuppetChip2.default, {
+            key: index,
+            onClick: function onClick() {
               console.log('chip click');
-            }, label: edge.node.Title, imgSrc: edge.node.Thumbnail });
+            },
+            label: edge.node.Title,
+            imgSrc: edge.node.Thumbnail
+          });
         })
       );
     }

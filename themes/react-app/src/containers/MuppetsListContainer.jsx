@@ -21,8 +21,13 @@ class MuppetsListContainer extends Component {
 
     return (
       <div>
-        {readMuppets.edges.map((edge, index) =>(
-          <MuppetChip key={index} onClick={()=> {console.log('chip click')}} label={edge.node.Title} imgSrc={edge.node.Thumbnail} />
+        {readMuppets.edges && readMuppets.edges.map((edge, index) => (
+          <MuppetChip
+            key={index}
+            onClick={()=> {console.log('chip click')}}
+            label={edge.node.Title}
+            imgSrc={edge.node.Thumbnail}
+          />
         ))}
       </div>
     )
