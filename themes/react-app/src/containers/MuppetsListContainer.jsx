@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { withApollo } from 'react-apollo'
 import {withStyles} from 'material-ui/styles';
 import { compose, gql, graphql} from 'react-apollo';
+import MuppetChip from '../components/MuppetChip';
 
 const styles = theme => ({
 
@@ -21,7 +22,7 @@ class MuppetsListContainer extends Component {
     return (
       <div>
         {readMuppets.edges.map((edge, index) =>(
-          <div>{edge.node.Title}</div>
+          <MuppetChip key={index} onClick={()=> {console.log('chip click')}} label={edge.node.Title} imgSrc={edge.node.Thumbnail} />
         ))}
       </div>
     )
