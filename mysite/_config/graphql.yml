@@ -19,7 +19,7 @@ SilverStripe\GraphQL\Controller:
           operations:
             read: true
         MyOrg\Model\Muppet:
-          fields: [ID, Title, Description, Thumbnail]
+          fields: [ID, Title, Description, Thumbnail, ChipImage]
           operations:
             read: true
   # Enforce HTTP basic authentication for GraphQL requests

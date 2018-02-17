@@ -87720,7 +87720,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _templateObject = _taggedTemplateLiteral(['\n  query allMuppetsQuery {\n  readMuppets {\n    edges {\n      node {\n        ID\n        Title\n        Thumbnail\n      }\n    }\n  }\n}\n'], ['\n  query allMuppetsQuery {\n  readMuppets {\n    edges {\n      node {\n        ID\n        Title\n        Thumbnail\n      }\n    }\n  }\n}\n']);
+var _templateObject = _taggedTemplateLiteral(['\n  query allMuppetsQuery {\n  readMuppets {\n    edges {\n      node {\n        ID\n        Title\n        ChipImage\n      }\n    }\n  }\n}\n'], ['\n  query allMuppetsQuery {\n  readMuppets {\n    edges {\n      node {\n        ID\n        Title\n        ChipImage\n      }\n    }\n  }\n}\n']);
 
 var _react = __webpack_require__(1);
 
@@ -87786,7 +87786,7 @@ var MuppetsListContainer = function (_Component) {
               console.log('chip click');
             },
             label: edge.node.Title,
-            imgSrc: edge.node.Thumbnail
+            imgSrc: edge.node.ChipImage
           });
         })
       );

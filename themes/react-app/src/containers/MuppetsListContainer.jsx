@@ -26,7 +26,7 @@ class MuppetsListContainer extends Component {
             key={index}
             onClick={()=> {console.log('chip click')}}
             label={edge.node.Title}
-            imgSrc={edge.node.Thumbnail}
+            imgSrc={edge.node.ChipImage}
           />
         ))}
       </div>
@@ -42,7 +42,7 @@ const ALL_MUPPETS_QUERY = gql`
       node {
         ID
         Title
-        Thumbnail
+        ChipImage
       }
     }
   }
