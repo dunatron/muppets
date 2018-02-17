@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { withApollo } from 'react-apollo'
 import {withStyles} from 'material-ui/styles';
-import { compose} from 'react-apollo';
+import { compose, gql, graphql} from 'react-apollo';
 
 const styles = theme => ({
 
@@ -9,27 +9,42 @@ const styles = theme => ({
 
 class MuppetsListContainer extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {
-    console.log('MuppetsListContainer.jsx mounted with the following props: ', this.props)
-  }
-
   render() {
 
-    const {classes} = this.props;
+    const {classes, allMuppetsQuery: {loading, readMuppets}} = this.props;
+    console.log('MuppetsListContainerProps:', this.props);
+
+    if(loading) {
+      return <div>Loading</div>
+    }
 
     return (
       <div>
-        <h1>Muppets Character List</h1>
+        {readMuppets.edges.map((edge, index) =>(
+          <div>{edge.node.Title}</div>
+        ))}
       </div>
     )
   }
+
 }
+
+const ALL_MUPPETS_QUERY = gql`
+  query allMuppetsQuery {
+  readMuppets {
+    edges {
+      node {
+        ID
+        Title
+        Thumbnail
+      }
+    }
+  }
+}
+`;
 
 export default compose(
   withApollo,
+  graphql(ALL_MUPPETS_QUERY,{name: 'allMuppetsQuery'}),
   withStyles(styles)
 )(MuppetsListContainer);

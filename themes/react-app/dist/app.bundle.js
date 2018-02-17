@@ -87548,6 +87548,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _templateObject = _taggedTemplateLiteral(['\n  query allMuppetsQuery {\n  readMuppets {\n    edges {\n      node {\n        ID\n        Title\n        Thumbnail\n      }\n    }\n  }\n}\n'], ['\n  query allMuppetsQuery {\n  readMuppets {\n    edges {\n      node {\n        ID\n        Title\n        Thumbnail\n      }\n    }\n  }\n}\n']);
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
@@ -87557,6 +87559,8 @@ var _reactApollo = __webpack_require__(102);
 var _styles = __webpack_require__(76);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -87571,31 +87575,41 @@ var styles = function styles(theme) {
 var MuppetsListContainer = function (_Component) {
   _inherits(MuppetsListContainer, _Component);
 
-  function MuppetsListContainer(props) {
+  function MuppetsListContainer() {
     _classCallCheck(this, MuppetsListContainer);
 
-    return _possibleConstructorReturn(this, (MuppetsListContainer.__proto__ || Object.getPrototypeOf(MuppetsListContainer)).call(this, props));
+    return _possibleConstructorReturn(this, (MuppetsListContainer.__proto__ || Object.getPrototypeOf(MuppetsListContainer)).apply(this, arguments));
   }
 
   _createClass(MuppetsListContainer, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      console.log('MuppetsListContainer.jsx mounted with the following props: ', this.props);
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var classes = this.props.classes;
+      var _props = this.props,
+          classes = _props.classes,
+          _props$allMuppetsQuer = _props.allMuppetsQuery,
+          loading = _props$allMuppetsQuer.loading,
+          readMuppets = _props$allMuppetsQuer.readMuppets;
 
+      console.log('MuppetsListContainerProps:', this.props);
+
+      if (loading) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          'Loading'
+        );
+      }
 
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          'h1',
-          null,
-          'Muppets Character List'
-        )
+        readMuppets.edges.map(function (edge, index) {
+          return _react2.default.createElement(
+            'div',
+            null,
+            edge.node.Title
+          );
+        })
       );
     }
   }]);
@@ -87603,7 +87617,9 @@ var MuppetsListContainer = function (_Component) {
   return MuppetsListContainer;
 }(_react.Component);
 
-exports.default = (0, _reactApollo.compose)(_reactApollo.withApollo, (0, _styles.withStyles)(styles))(MuppetsListContainer);
+var ALL_MUPPETS_QUERY = (0, _reactApollo.gql)(_templateObject);
+
+exports.default = (0, _reactApollo.compose)(_reactApollo.withApollo, (0, _reactApollo.graphql)(ALL_MUPPETS_QUERY, { name: 'allMuppetsQuery' }), (0, _styles.withStyles)(styles))(MuppetsListContainer);
 
 /***/ }),
 /* 987 */
