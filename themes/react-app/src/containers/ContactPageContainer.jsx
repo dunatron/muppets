@@ -5,7 +5,7 @@ import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Icon from 'material-ui/Icon';
 import TextField from 'material-ui/TextField';
-
+import Recaptcha from 'react-recaptcha'
 
 const styles = theme => ({
   container: {
@@ -36,6 +36,9 @@ const styles = theme => ({
   },
 });
 
+// create a variable to store the component instance
+let recaptchaInstance;
+
 class ContactPageContainer extends Component {
 
   constructor(props) {
@@ -47,13 +50,34 @@ class ContactPageContainer extends Component {
     };
   }
 
+
+
+// manually trigger reCAPTCHA execution
+  executeCaptcha = function () {
+    recaptchaInstance.execute();
+    console.log('reCAPTCHA FIRING');
+  };
+
+// executed once the captcha has been verified
+// can be used to post forms, redirect, etc.
+  verifyCallback = function (response) {
+    console.log(response);
+    console.log('recatcha verified');
+    //document.getElementById("someForm").submit();
+  };
+
+  callback = function () {
+    console.log('Done!!!!');
+  };
+
   componentDidMount() {
     console.log('ContactPageContainer.jsx mounted with the following props: ', this.props)
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    alert('Hold on now, I need to implement reCAPTCHA')
+    this.executeCaptcha()
+    //alert('Hold on now, I need to implement reCAPTCHA')
   };
 
   handleChange = name => event => {
@@ -106,6 +130,14 @@ class ContactPageContainer extends Component {
             className={classes.button} variant="raised" color="primary">
             <Icon className={classes.rightIcon}>Submit</Icon>
           </Button>
+          <Recaptcha
+            ref={e => recaptchaInstance = e}
+            type="checkbox"
+            sitekey="6LcoBEcUAAAAAOSVk6OrJNz1MOikLfvz1k-F1AK9"
+            render="explicit"
+            verifyCallback={() => this.verifyCallback()}
+            onloadCallback={() => this.callback()}
+          />
         </form>
       </div>
     )
