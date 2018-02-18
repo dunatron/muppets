@@ -89418,10 +89418,6 @@ var _TextField = __webpack_require__(1006);
 
 var _TextField2 = _interopRequireDefault(_TextField);
 
-var _reactRecaptcha = __webpack_require__(1013);
-
-var _reactRecaptcha2 = _interopRequireDefault(_reactRecaptcha);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -89431,6 +89427,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Recaptcha = __webpack_require__(1013);
 
 var styles = function styles(theme) {
   return {
@@ -89463,9 +89461,6 @@ var styles = function styles(theme) {
   };
 };
 
-// create a variable to store the component instance
-var recaptchaInstance = void 0;
-
 var ContactPageContainer = function (_Component) {
   _inherits(ContactPageContainer, _Component);
 
@@ -89473,21 +89468,6 @@ var ContactPageContainer = function (_Component) {
     _classCallCheck(this, ContactPageContainer);
 
     var _this = _possibleConstructorReturn(this, (ContactPageContainer.__proto__ || Object.getPrototypeOf(ContactPageContainer)).call(this, props));
-
-    _this.executeCaptcha = function () {
-      recaptchaInstance.execute();
-      console.log('reCAPTCHA FIRING');
-    };
-
-    _this.verifyCallback = function (response) {
-      console.log(response);
-      console.log('recatcha verified');
-      //document.getElementById("someForm").submit();
-    };
-
-    _this.callback = function () {
-      console.log('Done!!!!');
-    };
 
     _this.handleSubmit = function (e) {
       e.preventDefault();
@@ -89508,13 +89488,6 @@ var ContactPageContainer = function (_Component) {
     };
     return _this;
   }
-
-  // manually trigger reCAPTCHA execution
-
-
-  // executed once the captcha has been verified
-  // can be used to post forms, redirect, etc.
-
 
   _createClass(ContactPageContainer, [{
     key: 'componentDidMount',
@@ -89571,6 +89544,9 @@ var ContactPageContainer = function (_Component) {
             onChange: this.handleChange('message'),
             margin: 'normal'
           }),
+          _react2.default.createElement(Recaptcha, {
+            sitekey: '6LcoBEcUAAAAAOSVk6OrJNz1MOikLfvz1k-F1AK9'
+          }),
           _react2.default.createElement(
             _Button2.default,
             {
@@ -89584,21 +89560,7 @@ var ContactPageContainer = function (_Component) {
               { className: classes.rightIcon },
               'Submit'
             )
-          ),
-          _react2.default.createElement(_reactRecaptcha2.default, {
-            ref: function ref(e) {
-              return recaptchaInstance = e;
-            },
-            type: 'checkbox',
-            sitekey: '6LcoBEcUAAAAAOSVk6OrJNz1MOikLfvz1k-F1AK9',
-            render: 'explicit',
-            verifyCallback: function verifyCallback() {
-              return _this2.verifyCallback();
-            },
-            onloadCallback: function onloadCallback() {
-              return _this2.callback();
-            }
-          })
+          )
         )
       );
     }
