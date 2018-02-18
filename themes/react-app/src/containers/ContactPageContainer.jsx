@@ -1,40 +1,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { withApollo, compose } from 'react-apollo'
+import { withApollo, compose, gql, graphql } from 'react-apollo'
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Icon from 'material-ui/Icon';
 import TextField from 'material-ui/TextField';
 import Recaptcha from 'react-recaptcha';
+import {fulfillFetchSingleMuppet, rejectFetchSingleMuppet} from "../actions/modalActions";
 
 // site key
 const sitekey = '6LdBBUcUAAAAACcnoR4CCBcaq9bW2AslLRcE8uNu';
 
-// specifying your onload callback function
-// const callback = () => {
-//   console.log('Done!!!!');
-// };
-//
-// const verifyCallback = (response) => {
-//   console.log(response);
-// };
-
-// const expiredCallback = () => {
-//   console.log(`Recaptcha expired`);
-// };
-
 // define a variable to store the recaptcha instance
 let recaptchaInstance;
-
-// handle reset
-// const resetRecaptcha = () => {
-//   recaptchaInstance.reset();
-// };
-
-// const executeCaptcha = () => {
-//   recaptchaInstance.execute();
-//   console.log('fire instance');
-// };
 
 const styles = theme => ({
   container: {
@@ -91,20 +69,8 @@ class ContactPageContainer extends Component {
     });
   };
 
-  // specifying your onload callback function
-  // callback = function () {
-  //   console.log('Done!!!!');
-  // };
-  //
-  // // specifying verify callback function
-  // verifyCallback = (response) => {
-  //   console.log(response);
-  //   // document.getElementById("someForm").submit();
-  // };
-  //
-
   callback = () => {
-
+    console.log('reCAPTCHA callback');
   };
 
   expiredCallback = () => {
@@ -112,19 +78,41 @@ class ContactPageContainer extends Component {
   };
 
   verifyCallback = (response) => {
-    console.log(response);
-    console.log('execute the form now?')
+    this.sendContactForm(response);
   };
 
   executeCaptcha = () => {
     recaptchaInstance.execute();
-    console.log('executeCaptcha');
   };
 
   resetRecaptcha = () => {
-
+    recaptchaInstance.reset();
   };
 
+  sendContactForm = async (captchaToken) => {
+    console.group('Send Contact Form');
+    console.log('send form with captcha token', captchaToken);
+    console.groupEnd();
+
+    // GraphQL Mutation
+    // SUBMIT_CONTACT_FORM_QUERY
+    await this.props.contactFormMutation({
+      variables: {
+        recaptchaToken: captchaToken,
+        name: this.state.firstName,
+        email: this.state.email,
+        desc: this.state.message
+      }
+    }).then((res) => {
+      // 2. store muppet data in redux on success
+      alert(res)
+    }).catch((err) => {
+      // 2. store error data in redux on fail
+      alert(err)
+    });
+
+
+  };
 
   render() {
 
@@ -164,7 +152,6 @@ class ContactPageContainer extends Component {
             onChange={this.handleChange('message')}
             margin="normal"
           />
-          <h1>Google Recaptcha</h1>
           <Recaptcha
             ref={e => recaptchaInstance = e}
             sitekey={sitekey}
@@ -174,13 +161,12 @@ class ContactPageContainer extends Component {
             onloadCallback={() => this.callback()}
             expiredCallback={() => this.expiredCallback()}
           />
-          <br/>
-          <button
+          <Button
+            type="submit"
             onClick={() => this.resetRecaptcha()}
-          >
-            Reset
-          </button>
-
+            className={classes.button} color="primary">
+            <Icon className={classes.rightIcon}>reset reCAPTCHA</Icon>
+          </Button>
           <Button
             type="submit"
             onClick={(e) => this.handleSubmit(e)}
@@ -197,7 +183,24 @@ ContactPageContainer.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+const SUBMIT_CONTACT_FORM_MUTATION = gql`
+  mutation createForm($recaptchaToken: String!, $name: String!, $email: String!, $desc: String!) {
+  submitContactForm(
+    recaptchaToken: $recaptchaToken,
+    Name:$name,
+    Email: $email,
+    Description: $desc
+  ) {
+    ID
+    Name
+    Email
+    Description
+  }
+}
+`;
+
 export default compose(
   withApollo,
+  graphql(SUBMIT_CONTACT_FORM_MUTATION, {name: 'contactFormMutation'}),
   withStyles(styles)
 )(ContactPageContainer);

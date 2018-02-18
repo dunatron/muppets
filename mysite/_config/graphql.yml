@@ -11,7 +11,7 @@ SilverStripe\GraphQL\Controller:
     Allow-Methods:  'GET, POST, PATCH, PUT, DELETE, OPTIONS'
     Max-Age: 86400
   schema:
-    scaffolding_providers: [MyOrg\Model\Muppet, MyOrg\Model\HomePage]
+    scaffolding_providers: [MyOrg\Model\Muppet, MyOrg\Model\HomePage, MyOrg\Model\ContactSubmission]
     scaffolding:
       types:
         MyOrg\Model\HomePage:
@@ -22,6 +22,11 @@ SilverStripe\GraphQL\Controller:
           fields: [ID, Title, Description, Thumbnail, ChipImage]
           operations:
             read: true
+        MyOrg\Model\ContactSubmission:
+          fields: [ID, Name, Email, Description]
+          operations:
+            read: false
+            create: true
   # Enforce HTTP basic authentication for GraphQL requests
 #  authenticators:
 #    class: SilverStripe\GraphQL\Auth\BasicAuthAuthenticator
