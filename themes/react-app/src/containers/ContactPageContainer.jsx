@@ -158,12 +158,12 @@ class ContactPageContainer extends Component {
             sitekey={sitekey}
             size="invisible"
             render="explicit"
+            badge="inline" // bottomright || bottomleft || inline
             verifyCallback={(res) => this.verifyCallback(res)}
             onloadCallback={() => this.callback()}
             expiredCallback={() => this.expiredCallback()}
           />
           <Button
-            type="submit"
             onClick={() => this.resetRecaptcha()}
             className={classes.button} color="primary">
             <Icon className={classes.rightIcon}>reset reCAPTCHA</Icon>

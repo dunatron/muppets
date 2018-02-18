@@ -67068,7 +67068,7 @@ exports = module.exports = __webpack_require__(280)(undefined);
 
 
 // module
-exports.push([module.i, ".App {\n  text-align: center;\n}\n\n.App-logo {\n  animation: App-logo-spin infinite 20s linear;\n  height: 80px;\n}\n\n.ss-logo {\n  height: 80px;\n}\n\n.App-header {\n  background-color: #222;\n  min-height: 150px;\n  height: auto;\n  padding: 20px;\n  color: white;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n\n.App-title {\n  font-size: 1.5em;\n}\n\n.App-intro {\n  font-size: large;\n}\n\n@keyframes App-logo-spin {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n\n.Main__Body {\n  text-align: center;\n}\n", ""]);
+exports.push([module.i, ".App {\n  text-align: center;\n}\n\n.App-logo {\n  animation: App-logo-spin infinite 20s linear;\n  height: 80px;\n}\n\n.ss-logo {\n  height: 80px;\n}\n\n.App-header {\n  background-color: #222;\n  min-height: 150px;\n  height: auto;\n  padding: 20px;\n  color: white;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex-wrap: wrap;\n}\n\n.App-title {\n  font-size: 1.5em;\n}\n\n.App-intro {\n  font-size: large;\n}\n\n@keyframes App-logo-spin {\n  from { transform: rotate(0deg); }\n  to { transform: rotate(360deg); }\n}\n\n.Main__Body {\n  text-align: center;\n}\n\n#g-recaptcha {\n  padding: 20px 0 10px 0;\n}\n", ""]);
 
 // exports
 
@@ -89628,7 +89628,8 @@ var ContactPageContainer = function (_Component) {
             sitekey: sitekey,
             size: 'invisible',
             render: 'explicit',
-            verifyCallback: function verifyCallback(res) {
+            badge: 'inline' // bottomright || bottomleft || inline
+            , verifyCallback: function verifyCallback(res) {
               return _this3.verifyCallback(res);
             },
             onloadCallback: function onloadCallback() {
@@ -89641,7 +89642,6 @@ var ContactPageContainer = function (_Component) {
           _react2.default.createElement(
             _Button2.default,
             {
-              type: 'submit',
               onClick: function onClick() {
                 return _this3.resetRecaptcha();
               },
