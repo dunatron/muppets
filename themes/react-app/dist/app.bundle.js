@@ -89418,6 +89418,10 @@ var _TextField = __webpack_require__(1006);
 
 var _TextField2 = _interopRequireDefault(_TextField);
 
+var _reactRecaptcha = __webpack_require__(1013);
+
+var _reactRecaptcha2 = _interopRequireDefault(_reactRecaptcha);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -89428,7 +89432,34 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Recaptcha = __webpack_require__(1013);
+// site key
+var sitekey = '6LdBBUcUAAAAACcnoR4CCBcaq9bW2AslLRcE8uNu';
+
+// specifying your onload callback function
+// const callback = () => {
+//   console.log('Done!!!!');
+// };
+//
+// const verifyCallback = (response) => {
+//   console.log(response);
+// };
+
+// const expiredCallback = () => {
+//   console.log(`Recaptcha expired`);
+// };
+
+// define a variable to store the recaptcha instance
+var recaptchaInstance = void 0;
+
+// handle reset
+// const resetRecaptcha = () => {
+//   recaptchaInstance.reset();
+// };
+
+// const executeCaptcha = () => {
+//   recaptchaInstance.execute();
+//   console.log('fire instance');
+// };
 
 var styles = function styles(theme) {
   return {
@@ -89472,7 +89503,6 @@ var ContactPageContainer = function (_Component) {
     _this.handleSubmit = function (e) {
       e.preventDefault();
       _this.executeCaptcha();
-      //alert('Hold on now, I need to implement reCAPTCHA')
     };
 
     _this.handleChange = function (name) {
@@ -89480,6 +89510,22 @@ var ContactPageContainer = function (_Component) {
         _this.setState(_defineProperty({}, name, event.target.value));
       };
     };
+
+    _this.callback = function () {};
+
+    _this.expiredCallback = function () {};
+
+    _this.verifyCallback = function (response) {
+      console.log(response);
+      console.log('execute the form now?');
+    };
+
+    _this.executeCaptcha = function () {
+      recaptchaInstance.execute();
+      console.log('executeCaptcha');
+    };
+
+    _this.resetRecaptcha = function () {};
 
     _this.state = {
       firstName: '',
@@ -89494,6 +89540,19 @@ var ContactPageContainer = function (_Component) {
     value: function componentDidMount() {
       console.log('ContactPageContainer.jsx mounted with the following props: ', this.props);
     }
+
+    // specifying your onload callback function
+    // callback = function () {
+    //   console.log('Done!!!!');
+    // };
+    //
+    // // specifying verify callback function
+    // verifyCallback = (response) => {
+    //   console.log(response);
+    //   // document.getElementById("someForm").submit();
+    // };
+    //
+
   }, {
     key: 'render',
     value: function render() {
@@ -89544,9 +89603,38 @@ var ContactPageContainer = function (_Component) {
             onChange: this.handleChange('message'),
             margin: 'normal'
           }),
-          _react2.default.createElement(Recaptcha, {
-            sitekey: '6LcoBEcUAAAAAOSVk6OrJNz1MOikLfvz1k-F1AK9'
+          _react2.default.createElement(
+            'h1',
+            null,
+            'Google Recaptcha'
+          ),
+          _react2.default.createElement(_reactRecaptcha2.default, {
+            ref: function ref(e) {
+              return recaptchaInstance = e;
+            },
+            sitekey: sitekey,
+            size: 'invisible',
+            render: 'explicit',
+            verifyCallback: function verifyCallback(res) {
+              return _this2.verifyCallback(res);
+            },
+            onloadCallback: function onloadCallback() {
+              return _this2.callback();
+            },
+            expiredCallback: function expiredCallback() {
+              return _this2.expiredCallback();
+            }
           }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'button',
+            {
+              onClick: function onClick() {
+                return _this2.resetRecaptcha();
+              }
+            },
+            'Reset'
+          ),
           _react2.default.createElement(
             _Button2.default,
             {

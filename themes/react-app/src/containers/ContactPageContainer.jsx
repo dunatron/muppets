@@ -5,7 +5,36 @@ import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Icon from 'material-ui/Icon';
 import TextField from 'material-ui/TextField';
-var Recaptcha = require('react-recaptcha');
+import Recaptcha from 'react-recaptcha';
+
+// site key
+const sitekey = '6LdBBUcUAAAAACcnoR4CCBcaq9bW2AslLRcE8uNu';
+
+// specifying your onload callback function
+// const callback = () => {
+//   console.log('Done!!!!');
+// };
+//
+// const verifyCallback = (response) => {
+//   console.log(response);
+// };
+
+// const expiredCallback = () => {
+//   console.log(`Recaptcha expired`);
+// };
+
+// define a variable to store the recaptcha instance
+let recaptchaInstance;
+
+// handle reset
+// const resetRecaptcha = () => {
+//   recaptchaInstance.reset();
+// };
+
+// const executeCaptcha = () => {
+//   recaptchaInstance.execute();
+//   console.log('fire instance');
+// };
 
 const styles = theme => ({
   container: {
@@ -53,8 +82,7 @@ class ContactPageContainer extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.executeCaptcha()
-    //alert('Hold on now, I need to implement reCAPTCHA')
+    this.executeCaptcha();
   };
 
   handleChange = name => event => {
@@ -62,6 +90,41 @@ class ContactPageContainer extends Component {
       [name]: event.target.value,
     });
   };
+
+  // specifying your onload callback function
+  // callback = function () {
+  //   console.log('Done!!!!');
+  // };
+  //
+  // // specifying verify callback function
+  // verifyCallback = (response) => {
+  //   console.log(response);
+  //   // document.getElementById("someForm").submit();
+  // };
+  //
+
+  callback = () => {
+
+  };
+
+  expiredCallback = () => {
+
+  };
+
+  verifyCallback = (response) => {
+    console.log(response);
+    console.log('execute the form now?')
+  };
+
+  executeCaptcha = () => {
+    recaptchaInstance.execute();
+    console.log('executeCaptcha');
+  };
+
+  resetRecaptcha = () => {
+
+  };
+
 
   render() {
 
@@ -101,9 +164,23 @@ class ContactPageContainer extends Component {
             onChange={this.handleChange('message')}
             margin="normal"
           />
+          <h1>Google Recaptcha</h1>
           <Recaptcha
-            sitekey="6LcoBEcUAAAAAOSVk6OrJNz1MOikLfvz1k-F1AK9"
+            ref={e => recaptchaInstance = e}
+            sitekey={sitekey}
+            size="invisible"
+            render="explicit"
+            verifyCallback={(res) => this.verifyCallback(res)}
+            onloadCallback={() => this.callback()}
+            expiredCallback={() => this.expiredCallback()}
           />
+          <br/>
+          <button
+            onClick={() => this.resetRecaptcha()}
+          >
+            Reset
+          </button>
+
           <Button
             type="submit"
             onClick={(e) => this.handleSubmit(e)}
