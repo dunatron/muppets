@@ -105,7 +105,8 @@ class ContactPageContainer extends Component {
       }
     }).then((res) => {
       // 2. store muppet data in redux on success
-      alert(res)
+      alert('Form Submitted, resetting captcha');
+      this.resetRecaptcha();
     }).catch((err) => {
       // 2. store error data in redux on fail
       alert(err)

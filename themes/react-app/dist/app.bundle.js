@@ -89538,7 +89538,8 @@ var ContactPageContainer = function (_Component) {
                   }
                 }).then(function (res) {
                   // 2. store muppet data in redux on success
-                  alert(res);
+                  alert('Form Submitted, resetting captcha');
+                  _this.resetRecaptcha();
                 }).catch(function (err) {
                   // 2. store error data in redux on fail
                   alert(err);
