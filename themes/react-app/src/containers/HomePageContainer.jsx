@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import { withApollo } from 'react-apollo'
+import {withApollo} from 'react-apollo'
 import {withStyles} from 'material-ui/styles';
 import {gql, compose, graphql} from 'react-apollo';
-import {darken, fade, emphasize, lighten} from 'material-ui/styles/colorManipulator';
+import {fade} from 'material-ui/styles/colorManipulator';
 import Typography from 'material-ui/Typography';
 import Loader from '../components/Loader';
-import MuppetCard from '../components/MuppetCard';
+import RandomMuppetContainer from './RandomMuppetContainer';
 
 const styles = theme => ({
   bannerImage: {
@@ -41,7 +41,8 @@ const styles = theme => ({
     'flex-wrap': 'wrap',
     'padding': '0 30px',
     'align-items': 'center',
-    'justify-content': 'space-evenly'
+    'justify-content': 'space-evenly',
+    marginBottom: '40px'
   },
   muppetCard: {
     // 'flex': '1',
@@ -77,7 +78,7 @@ class HomePageContainer extends Component {
     }
 
     const HomePageData = getHomePageFirst[0];
-    const {ID, Title, Intro, Content, BannerImage, RandomMuppet} = HomePageData;
+    const {Title, Intro, Content, BannerImage} = HomePageData;
 
     return (
       <div>
@@ -86,10 +87,9 @@ class HomePageContainer extends Component {
         </div>
         <Typography component="p" className={classes.introSection}>{Intro}</Typography>
         <div className={classes.bodySection}>
-          <div className={classes.muppetCard}>
-            <MuppetCard muppetData={RandomMuppet}  />
-          </div>
-          <Typography component="p" className={classes.contentText} dangerouslySetInnerHTML={{__html: Content}}></Typography>
+          <RandomMuppetContainer/>
+          <Typography component="p" className={classes.contentText}
+                      dangerouslySetInnerHTML={{__html: Content}}></Typography>
         </div>
       </div>
     )

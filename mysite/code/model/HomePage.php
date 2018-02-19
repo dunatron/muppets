@@ -82,7 +82,7 @@ class HomePage extends SiteTree implements ScaffoldingProvider
                 $homePage = self::get()->first();
                 if (!$homePage) {
                     throw new \InvalidArgumentException(sprintf(
-                        'Home Page #%s does not exist'
+                        'Home Page does not exist'
                     ));
                 }
                 return $homePage;

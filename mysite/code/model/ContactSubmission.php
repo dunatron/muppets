@@ -22,6 +22,9 @@ class ContactSubmission extends DataObject implements ScaffoldingProvider
         return true;
     }
 
+    /**
+     *Avert your eyes, this is not the function you are looking for
+     */
     public function handleNewFormSubmission($args)
     {
         $captcha = new Captcha();
@@ -29,14 +32,9 @@ class ContactSubmission extends DataObject implements ScaffoldingProvider
         $response = $captcha->verify();
 
         if (!$response->success) {
-            // not works
-            error_log(var_export('not works', true));
             return 'Nope';
         }
         else {
-            // works
-            error_log(var_export('works', true));
-
             $token = $args['recaptchaToken'];
             $name = $args['Name'];
             $email = $args['Email'];

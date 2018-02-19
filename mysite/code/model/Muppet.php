@@ -13,6 +13,7 @@ use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TabSet;
 use SilverStripe\Forms\Tab;
+use SilverStripe\ORM\Queries\SQLSelect;
 
 class Muppet extends DataObject implements ScaffoldingProvider
 {
@@ -48,6 +49,30 @@ class Muppet extends DataObject implements ScaffoldingProvider
         if ($this->Image()->exists()) {
             $this->Image()->copyVersionToStage('Stage', 'Live');
         }
+    }
+
+    public function MuppetIds()
+    {
+        $sqlQuery = new SQLSelect();
+        $sqlQuery->setFrom('MyOrg_Model_Muppet');
+        $sqlQuery->setSelect(['ID']);
+        $sqlQuery->selectField('ID', 'ID');
+
+        $result = $sqlQuery->execute();
+
+        $IDS = [];
+        foreach($result as $row) {
+             $row['ID'];
+            $IDS[] = $row['ID'];
+        }
+
+        return $IDS;
+    }
+
+    public function RandomMuppetIDFromIds(array $ids)
+    {
+        $randomID = $ids[array_rand($ids, 1)];
+        return $randomID;
     }
 
     public function getCMSFields()
@@ -100,13 +125,22 @@ class Muppet extends DataObject implements ScaffoldingProvider
             })
             ->setUsePagination(false)
             ->end();
-
         // Get all Muppet Objects (No Pagination)
         $scaffolder
             ->query('getAllMuppets', __CLASS__)
             ->setResolver(function ($object, array $args, $context, ResolveInfo $info){
                 $muppets = self::get();
                 return $muppets;
+            })
+            ->setUsePagination(false)
+            ->end();
+        // We need a random Muppet
+        $scaffolder
+            ->query('randomMuppet', __CLASS__)
+            ->setResolver(function ($object, array $args, $context, ResolveInfo $info){
+                $Ids = $this->MuppetIds();
+                $randomID = $this->RandomMuppetIDFromIds($Ids);
+                return self::get()->byID($randomID);
             })
             ->setUsePagination(false)
             ->end();

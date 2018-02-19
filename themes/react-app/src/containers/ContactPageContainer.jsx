@@ -90,12 +90,7 @@ class ContactPageContainer extends Component {
   };
 
   sendContactForm = async (captchaToken) => {
-    console.group('Send Contact Form');
-    console.log('send form with captcha token', captchaToken);
-    console.groupEnd();
 
-    // GraphQL Mutation
-    // SUBMIT_CONTACT_FORM_QUERY
     await this.props.contactFormMutation({
       variables: {
         recaptchaToken: captchaToken,
@@ -104,14 +99,11 @@ class ContactPageContainer extends Component {
         desc: this.state.message
       }
     }).then((res) => {
-      // 2. store muppet data in redux on success
-      alert('Form Submitted, resetting captcha');
+
       this.resetRecaptcha();
     }).catch((err) => {
-      // 2. store error data in redux on fail
-      alert(err)
-    });
 
+    });
 
   };
 
