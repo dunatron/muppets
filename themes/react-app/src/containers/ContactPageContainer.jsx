@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { withApollo, compose, gql, graphql } from 'react-apollo'
-import { withStyles } from 'material-ui/styles';
+import {withApollo, compose, gql, graphql} from 'react-apollo'
+import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Icon from 'material-ui/Icon';
 import TextField from 'material-ui/TextField';
 import Recaptcha from 'react-recaptcha';
-import {fulfillFetchSingleMuppet, rejectFetchSingleMuppet} from "../actions/modalActions";
+import Loader from '../components/Loader';
 
 // site key
 const sitekey = '6LdBBUcUAAAAACcnoR4CCBcaq9bW2AslLRcE8uNu';
@@ -50,7 +50,9 @@ class ContactPageContainer extends Component {
     this.state = {
       firstName: '',
       email: '',
-      message: ''
+      message: '',
+      submitting: false,
+      sent: false
     };
   }
 
@@ -60,6 +62,10 @@ class ContactPageContainer extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    this.setState({
+      submitting: true,
+      sent: false
+    });
     this.executeCaptcha();
   };
 
@@ -78,7 +84,10 @@ class ContactPageContainer extends Component {
   };
 
   verifyCallback = (response) => {
-    this.sendContactForm(response);
+    this.sendContactForm(response).then(() => {
+      this.setState({sent: true, submitting: false,})
+    });
+    // this.forceUpdate();
   };
 
   executeCaptcha = () => {
@@ -110,6 +119,20 @@ class ContactPageContainer extends Component {
   render() {
 
     const {classes} = this.props;
+
+    if (this.state.sent) {
+      return <div>
+        <h1>Form sent</h1>
+        <Button
+          type="submit"
+          onClick={() => {
+            this.setState({sent: false})
+          }}
+          className={classes.button} variant="raised" color="primary">
+          <Icon className={classes.rightIcon}>resend maybe?</Icon>
+        </Button>
+      </div>
+    }
 
     return (
       <div>
@@ -160,12 +183,15 @@ class ContactPageContainer extends Component {
             className={classes.button} color="primary">
             <Icon className={classes.rightIcon}>reset reCAPTCHA</Icon>
           </Button>
-          <Button
-            type="submit"
-            onClick={(e) => this.handleSubmit(e)}
-            className={classes.button} variant="raised" color="primary">
-            <Icon className={classes.rightIcon}>Submit</Icon>
-          </Button>
+
+          {this.state.submitting && <Loader loadingText={"submitting form"} size={40} fontSize={22}/>}
+          {!this.state.submitting && <Button
+              type="submit"
+              onClick={(e) => this.handleSubmit(e)}
+              className={classes.button} variant="raised" color="primary">
+              <Icon className={classes.rightIcon}>Submit</Icon>
+          </Button>}
+
         </form>
       </div>
     )
