@@ -25,23 +25,6 @@ class HomePage extends SiteTree implements ScaffoldingProvider
         return $this->Image()->exists() ? $this->Image()->Fill(800, 300)->AbsoluteURL : null;
     }
 
-    public function getRandomMuppet()
-    {
-        // This is running 4 times on a graphQL call...
-        $muppetID = $this->RandomMuppetID();
-        error_log(var_export($muppetID, true));
-        //return Muppet::get()->byID($muppetID);
-        return Muppet::get()->byID(1);
-    }
-
-    public function RandomMuppetID()
-    {
-        $ran = array(1,2,3,4,5,6,7,8,9,10,11);
-        $randomID = $ran[array_rand($ran, 1)];
-        return $randomID;
-    }
-
-
     public function onAfterWrite()
     {
         parent::onAfterWrite();

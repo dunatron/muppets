@@ -15,7 +15,7 @@ SilverStripe\GraphQL\Controller:
     scaffolding:
       types:
         MyOrg\Model\HomePage:
-          fields: [ID, Title, Intro, Content, BannerImage, RandomMuppet]
+          fields: [ID, Title, Intro, Content, BannerImage]
           operations:
             read: true
         MyOrg\Model\Muppet:

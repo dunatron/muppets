@@ -104,12 +104,6 @@ query readHomePage {
     Intro
     Content
     BannerImage
-    RandomMuppet {
-      ID
-      Title
-      Description
-      Thumbnail
-    }
   }
 }
 `;
